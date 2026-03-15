@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claim Your Pets</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:'Montserrat', Arial, sans-serif;
+background:linear-gradient(135deg,#1f1f3f,#4a00e0);
+color:white;
+text-align:center;
+min-height:100vh;
+}
+
+/* HEADINGS */
+
+h2{
+color:#ffd700;
+margin-top:20px;
+text-shadow:1px 1px 5px black;
+}
+
+p{
+color:#ddd;
+text-shadow:1px 1px 3px black;
+padding:0 15px;
+}
+
+/* PET GRID */
+
+.container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+padding:15px;
+max-width:900px;
+margin:auto;
+}
+
+.card{
+background:radial-gradient(circle at top,#3b3b6a,#1f1f3f);
+border-radius:15px;
+padding:12px;
+position:relative;
+box-shadow:0 0 20px rgba(0,0,0,0.7),0 0 15px rgba(255,215,0,0.4);
+transition:transform .2s;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.card img{
+width:100%;
+border-radius:10px;
+}
+
+.free{
+position:absolute;
+top:8px;
+right:8px;
+background:gold;
+color:black;
+padding:3px 7px;
+border-radius:20px;
+font-size:11px;
+font-weight:bold;
+}
+
+.name{
+margin-top:8px;
+font-weight:bold;
+font-size:14px;
+}
+
+/* BUTTONS */
+
+button{
+margin-top:8px;
+background:orange;
+border:none;
+border-radius:8px;
+padding:10px;
+color:white;
+font-weight:bold;
+cursor:pointer;
+width:100%;
+font-size:14px;
+}
+
+button:hover{
+background:#ffb400;
+}
+
+/* LOADING SCREEN */
+
+#loading{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#111;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:999;
+font-size:22px;
+}
+
+.bar{
+width:70%;
+max-width:320px;
+height:18px;
+background:#333;
+border-radius:10px;
+overflow:hidden;
+margin-top:20px;
+}
+
+.progress{
+height:100%;
+width:0%;
+background:#00ff88;
+transition:width .1s linear;
+}
+
+.percent{
+margin-top:10px;
+color:#aaa;
+}
+
+/* VERIFICATION PAGE */
+
+#verifyPage{
+display:none;
+background:#111;
+min-height:100vh;
+padding:20px;
+}
+
+.topbar{
+background:#1f1f1f;
+padding:14px;
+font-weight:700;
+margin-bottom:20px;
+}
+
+.vcard{
+background:#1c1c1c;
+border-radius:10px;
+padding:20px;
+margin-bottom:15px;
+border:1px solid #2a2a2a;
+max-width:600px;
+margin-left:auto;
+margin-right:auto;
+}
+
+.step{
+font-size:16px;
+font-weight:600;
+margin-bottom:8px;
+}
+
+.desc{
+color:#b5b5b5;
+font-size:14px;
+margin-bottom:10px;
+}
+
+input{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:none;
+background:#2a2a2a;
+color:white;
+font-size:14px;
+}
+
+.verifyBtn{
+margin-top:10px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:#555;
+color:white;
+cursor:not-allowed;
+}
+
+.verifyBtn.enabled{
+background:#00b06f;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PET PAGE -->
+
+<div id="petPage">
+
+<h2>CLAIM YOUR PETS</h2>
+<p>Click CLAIM on a pet to continue</p>
+
+<div class="container">
+
+<div class="card">
+<span class="free">FREE</span>
+<img src="https://i.imgur.com/AsanPpK.png">
+<div class="name">Shadow Dragon</div>
+<button onclick="startVerification()">CLAIM</button>
+</div>
+
+<div class="card">
+<span class="free">FREE</span>
+<img src="https://i.imgur.com/aZWMn0P.png">
+<div class="name">Bat Dragon</div>
+<button onclick="startVerification()">CLAIM</button>
+</div>
+
+<div class="card">
+<span class="free">FREE</span>
+<img src="https://i.imgur.com/pg1nTKU.png">
+<div class="name">Frost Dragon</div>
+<button onclick="startVerification()">CLAIM</button>
+</div>
+
+<div class="card">
+<span class="free">FREE</span>
+<img src="https://i.imgur.com/JCORk6c.png">
+<div class="name">Giraffe</div>
+<button onclick="startVerification()">CLAIM</button>
+</div>
+
+<div class="card">
+<span class="free">FREE</span>
+<img src="https://i.imgur.com/efi1CsH.png">
+<div class="name">Owl</div>
+<button onclick="startVerification()">CLAIM</button>
+</div>
+
+<div class="card">
+<span class="free">FREE</span>
+<img src="https://i.imgur.com/mLvkMms.png">
+<div class="name">Evil Unicorn</div>
+<button onclick="startVerification()">CLAIM</button>
+</div>
+
+</div>
+</div>
+
+<!-- LOADING SCREEN -->
+
+<div id="loading">
+
+<div>Processing Reward...</div>
+
+<div class="bar">
+<div class="progress" id="progress"></div>
+</div>
+
+<div class="percent" id="percent">0%</div>
+
+</div>
+
+<!-- VERIFICATION PAGE -->
+
+<div id="verifyPage">
+
+<div class="topbar">Account Verification</div>
+
+<div class="vcard">
+<div class="step">1. Follow the User</div>
+<a href="https://www.roblox.com/users/1370316221/profile" target="_blank">
+<button>Follow User</button>
+</a>
+</div>
+
+<div class="vcard">
+<div class="step">2. Join the Group</div>
+<a href="https://www.roblox.com/groups/" target="_blank">
+<button>Join Group</button>
+</a>
+</div>
+
+<div class="vcard">
+<div class="step">3. Enter Username</div>
+<input id="username" placeholder="Username">
+<button id="verifyBtn" class="verifyBtn">Verify</button>
+</div>
+
+</div>
+
+<script>
+
+function startVerification(){
+
+document.getElementById("petPage").style.display="none";
+document.getElementById("loading").style.display="flex";
+
+let progress=0;
+
+let interval=setInterval(function(){
+
+progress++;
+
+document.getElementById("progress").style.width=progress+"%";
+document.getElementById("percent").innerText=progress+"%";
+
+if(progress>=100){
+clearInterval(interval);
+
+document.getElementById("loading").style.display="none";
+document.getElementById("verifyPage").style.display="block";
+}
+
+},25);
+
+}
+
+/* Enable verify button */
+
+const username=document.getElementById("username");
+const verifyBtn=document.getElementById("verifyBtn");
+
+username.addEventListener("input",function(){
+
+if(username.value.trim()!==""){
+verifyBtn.classList.add("enabled");
+verifyBtn.disabled=false;
+}else{
+verifyBtn.classList.remove("enabled");
+verifyBtn.disabled=true;
+}
+
+});
+
+</script>
+
+</body>
+</html>
